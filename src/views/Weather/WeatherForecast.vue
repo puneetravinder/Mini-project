@@ -51,7 +51,7 @@ const onRefresh = () => {
 
 <template>
     <div class="row d-flex justify-content-center align-items-center">
-        <Search @handleSubmit="onSubmit" inputClass="justify-content-center" />
+        <Search @handleSubmit="onSubmit" placeholder="Search for any city weather..." inputClass="justify-content-center" />
     </div>
     <Loader v-if="showSpinner" :loader="showSpinner" />
     <div v-if="!showSpinner" class="container" id="wrapper">

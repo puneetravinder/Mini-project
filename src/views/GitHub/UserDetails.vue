@@ -44,9 +44,9 @@ const getUserRepos = (username) => {
             </div>
             <div class="col-md-5">
                 <div class="profile-head">
-                    <h5>{{ userData?.name }}</h5>
+                    <h3>{{ userData?.name }}</h3>
                     <h6>@{{ userData?.login }}</h6>
-                    <div class="row proile-rating my-3">
+                    <div class="row proile-rating my-4">
                         <div class="col-md-4 emphasis">
                             <h2><strong> {{ userData?.followers }} </strong></h2>
                             <p><small>Followers</small></p>
@@ -147,15 +147,20 @@ const getUserRepos = (username) => {
 }
 
 .proile-rating {
-    font-size: 12px;
+    font-size: 15px;
     color: #818182;
-    margin-top: 5%;
+    /* margin-top: 5%; */
 }
 
 .proile-rating span {
     color: #495057;
     font-size: 15px;
     font-weight: 600;
+}
+
+.proile-rating p {
+    margin-top: -25px;
+    padding-left: 40px;
 }
 
 .profile-head .nav-tabs {

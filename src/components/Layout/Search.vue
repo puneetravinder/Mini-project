@@ -4,6 +4,9 @@ import { ref, watch } from "vue";
 const searchText = ref('')
 const emit = defineEmits(['handleSubmit'])
 const props = defineProps({
+    placeholder: {
+        default: 'Search...'
+    },
     inputClass: {
         type: String,
         default: 'justify-content-start'
@@ -23,7 +26,7 @@ watch(searchText, () => {
                 <form @submit.prevent="$emit('handleSubmit', searchText)">
                     <font-awesome-icon icon="magnifying-glass" class="fa fa-search" />
                     <input v-model="searchText" type="text" class="form-control"
-                        placeholder="Looking for github user? Find here...">
+                        :placeholder="props.placeholder">
                     <button type="submit" class="btn btn-primary">Search</button>
                 </form>
             </div>

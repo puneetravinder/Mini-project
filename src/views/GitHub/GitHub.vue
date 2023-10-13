@@ -39,7 +39,7 @@ const onSubmit = (searchData) => {
 <template>
     <Loader v-if="gitStore.showSpinner" :loader="gitStore.showSpinner" />
     <div v-if="!gitStore.showSpinner" class="container mb-5">
-        <Search @handleSubmit="onSubmit" />
+        <Search @handleSubmit="onSubmit" placeholder="Looking for github user? Find here..." />
         <article class="col-md-12">
             <div class="cards-7 section-gray">
                 <div class="container">

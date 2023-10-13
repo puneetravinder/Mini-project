@@ -42,7 +42,7 @@ const onSubmit = (searchData) => {
         <!-- <header class="mb-4">
             <h2>Movie App</h2>
         </header> -->
-        <Search @handleSubmit="onSubmit" />
+        <Search @handleSubmit="onSubmit" placeholder="Search a movie..."/>
         <article class="col-md-12" v-if="movieData.length">
             <!-- BLOG CARDS -->
             <div class="cards-1 section-gray">
