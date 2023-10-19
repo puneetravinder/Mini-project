@@ -6,9 +6,12 @@ import axios from "axios"
 import { useNow, useDateFormat } from '@vueuse/core'
 import Icon from "../../components/Layout/Icon.vue";
 import Loader from "../../components/Layout/Loader.vue";
+import Error from "../../components/Layout/Error.vue";
 
 const tasksStore = useTaskStore()
 const showSpinner = ref(false)
+const isError = ref(false)
+const errMsg = ref('')
 
 tasksStore.navTitle = 'Weather App'
 tasksStore.colorClass = 'navbar-dark'
@@ -34,12 +37,16 @@ const onSubmit = (searchData) => {
 
 const getWeather = (nameStr) => {
     showSpinner.value = true
-    showSpinner.value = true
     const apiKey = '6Q7YKYCXX35SLVXW8NZGLYN4Q'
     const baseUrl = 'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/'
     axios.get(`${baseUrl}${nameStr}/next4days?unitGroup=metric&key=${apiKey}`).then(res => {
         weatherData.value = res.data
         showSpinner.value = false
+        isError.value = false
+    }).catch(err => {
+        showSpinner.value = false
+        isError.value = true
+        errMsg.value = `${err.response.data.split(':')[1]} :  ${searchText.value}`
     })
 }
 
@@ -52,9 +59,10 @@ const onRefresh = () => {
 <template>
     <div class="row d-flex justify-content-center align-items-center">
         <Search @handleSubmit="onSubmit" placeholder="Search for any city weather..." inputClass="justify-content-center" />
+        <Error v-if="isError" :error-msg="errMsg" />
     </div>
     <Loader v-if="showSpinner" :loader="showSpinner" />
-    <div v-if="!showSpinner" class="container" id="wrapper">
+    <div v-if="!showSpinner && !isError" class="container" id="wrapper">
         <div class="container-fluid" id="current-weather">
             <div class="row">
                 <!-- Left panel -->
