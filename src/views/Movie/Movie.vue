@@ -50,7 +50,7 @@ const onSubmit = (searchData) => {
                     <div class="row">
                         <div class="col-md-3" v-for="movie in movieData">
                             <div class="movieapp-card card-blog">
-                                <div class="card-image">
+                                <div class="card-image" style="height: 320px !important;">
                                     <img class="img" :src="movie?.Poster">
                                     <!-- <div class="card-caption">{{ movie?.Title }}</div> -->
                                     <div class="ripple-cont"></div>
@@ -61,7 +61,7 @@ const onSubmit = (searchData) => {
                                     <h6 class="category text-danger">Director : {{ movie?.Director }}</h6>
                                     <h6 class="category text-success">Ratings : {{ movie.Ratings[0]?.Value }}</h6>
                                     <h6 class="category text-warning">Released : {{ movie?.Released }}</h6>
-                                    <p class="card-description"><strong>Plot </strong> - {{ movie?.Plot }}</p>
+                                    <p class="card-description" style="height: 220px;"><strong>Plot </strong> - {{ movie?.Plot }}</p>
                                 </div>
                             </div>
                         </div>
