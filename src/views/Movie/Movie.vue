@@ -3,6 +3,7 @@ import { ref, watchEffect } from "vue";
 import { useTaskStore } from "../../stores/tasksStore";
 import Search from "../../components/Layout/Search.vue";
 import axios from "axios";
+import Error from "../../components/Layout/Error.vue";
 
 const tasksStore = useTaskStore()
 tasksStore.navTitle = 'Movie Search App'
@@ -16,13 +17,21 @@ const movies = [
 ]
 
 const movieData = ref([])
+const isError = ref(false)
+const errMsg = ref('')
 
 const getMovie = (movieName) => {
     const baseUrl = 'https://omdbapi.com/?t='
     const apiKey = 'dbee93e2'
     const url = `${baseUrl}${movieName}&apikey=${apiKey}`
     axios.get(url).then(res => {
-        movieData.value = [res.data]
+        if (res.data.Error) {
+            errMsg.value = `${res.data.Error} with name '${movieName}'`
+            isError.value = true
+        } else {
+            movieData.value = [res.data]
+            isError.value = false
+        }
     })
 }
 
@@ -39,11 +48,9 @@ const onSubmit = (searchData) => {
 
 <template>
     <div class="container mb-5">
-        <!-- <header class="mb-4">
-            <h2>Movie App</h2>
-        </header> -->
-        <Search @handleSubmit="onSubmit" placeholder="Search a movie..."/>
-        <article class="col-md-12" v-if="movieData.length">
+        <Search @handleSubmit="onSubmit" placeholder="Search a movie..." />
+        <Error v-if="isError" :error-msg="errMsg" />
+        <article class="col-md-12" v-if="movieData.length && !isError">
             <!-- BLOG CARDS -->
             <div class="cards-1 section-gray">
                 <div class="container">
@@ -59,9 +66,10 @@ const onSubmit = (searchData) => {
                                     <h6 class="category text-primary">Genre : {{ movie?.Genre }}</h6>
                                     <h6 class="category text-info">Cast : {{ movie?.Actors }} </h6>
                                     <h6 class="category text-danger">Director : {{ movie?.Director }}</h6>
-                                    <h6 class="category text-success">Ratings : {{ movie.Ratings[0]?.Value }}</h6>
+                                    <h6 class="category text-success">Ratings : {{ movie?.Ratings[0]?.Value }}</h6>
                                     <h6 class="category text-warning">Released : {{ movie?.Released }}</h6>
-                                    <p class="card-description" style="height: 220px;"><strong>Plot </strong> - {{ movie?.Plot }}</p>
+                                    <p class="card-description" style="height: 220px;"><strong>Plot </strong> - {{
+                                        movie?.Plot }}</p>
                                 </div>
                             </div>
                         </div>
